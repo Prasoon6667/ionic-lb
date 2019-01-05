@@ -1,0 +1,92 @@
+.progress-wrapper{
+    width: 100%;
+    background-color: #999;
+    height: 5px;
+    border-radius: 2px;    
+    .progress-loader{
+        height: 100%;
+        background-color: #ff0068;
+        border-radius: 2px;
+    }
+}
+
+.subcategory-nav {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.opinion-text{  
+    line-height: 150%;
+    text-align: center;
+    font-size: large;
+}
+
+.counter {
+    color: #ea0a8e;
+    font-weight: 500;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.background{
+    background-color: #f4f4f4;
+}
+
+
+.wrap{
+    padding: 0 10% 0 10%;
+}
+
+
+ion-label.checkmark div.test {
+    font-size: 13px;
+    list-style-type: none;
+    padding: 0.25em 0 0px 3.2em;
+    position: relative;
+    text-align: left;
+}
+
+ion-label.checkmark div.test:before{
+    content: " ";
+    display: block;
+    border: solid .8em #ea0a8e;
+    border-radius: .8em;
+    height: 0;
+    width: 0;
+    position: absolute;
+    left: .5em;
+    top: 40%;
+    margin-top: -.5em;
+}
+ion-label.checkmark div.test:after{
+    content: " ";
+    display: block;
+    width: .3em;
+    height: .6em;
+    border: solid #fff;
+    border-width: 0 .2em .2em 0;
+    position: absolute;
+    left: 1em;
+    top: 40%;
+    margin-top: -.2em;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+ion-label.uncheckmark div.test:before {
+    content: " ";
+    display: block;
+    border: solid .2em #ddd;
+    border-radius: .8em;
+    height: 1.2em;
+    width: 1.2em;
+    position: absolute;
+    left: .5em;
+    top: 40%;
+    margin-top: -.5em;
+}

@@ -1,0 +1,47 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>category</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button shape="round" fill="outline"(click)="navigateToSubCategory()">Go to category page</ion-button>
+</ion-content> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" routerLink="/home" routerDirection="forward"></ion-icon>
+    </ion-buttons>
+    <ion-title text-center class="custom-text-color">SHARE YOUR OPINION</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="background">
+  <div class="wrap" *ngIf="surveyData">
+    <div text-center padding class="opinion-text"> {{surveyData.description}}</div>
+
+    <div>
+      <div>
+        <div class="counter">
+          {{surveyData.answeredCategories}} de {{surveyData.totalCategories}} categories answered
+        </div>
+        <div class="progress-wrapper"><div class="progress-loader" [style.width]="getprogress(surveyData.answeredCategories, surveyData.totalCategories) + '%'"></div></div>
+      </div>
+        <ion-list>
+        <ion-item *ngFor="let category of surveyData.categories">   
+           <!--  <ion-avatar slot="start">
+              <ion-checkbox color="custom" [checked]="category.answered"></ion-checkbox>
+            </ion-avatar> -->
+            <ion-label class="checkmark" [class.uncheckmark]="!category.answered">
+              <div class="test">
+                <h2>{{category.name}}</h2>
+                <p>{{category.subCategoriesCount}} products</p>
+                <ion-icon class="subcategory-nav" name="arrow-forward" (click)="navigateToSubCategory(category.id)" end></ion-icon>
+              </div>
+            </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

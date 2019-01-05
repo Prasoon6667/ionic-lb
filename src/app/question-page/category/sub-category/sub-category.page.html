@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" routerLink="/home" routerDirection="forward"></ion-icon>
+    </ion-buttons>
+    <ion-title text-center class="custom-text-color">{{categoryName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="category-card" padding *ngIf="pageId == 0 && pageData">
+    <div>
+      <img [src]="pageData.img" />
+      <div>{{pageData.description}}</div>
+    </div>
+  </div>
+  <div class="subcategory-card" *ngIf="pageId != 0 && pageData">
+    <div class="header" padding>
+      <img [src]="pageData.img" />
+      <div>{{pageData.name}}</div>
+    </div>
+    <div class="content">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="row-pad" size="6" *ngFor="let suggestion of sampleSuggestion; let suggestionIndex = index">
+            <div [class.selected]="suggestion.isSelected" (click)="submitSuggestion(suggestionIndex)"><strong>{{ suggestion.displayName }}</strong></div>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row class="row-pad">
+          <ion-col>
+            <strong>i didn\'t have</strong>
+          </ion-col>
+          <ion-col>
+            <strong>Very necessary</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row-pad">
+          <ion-col>
+            <strong>New gift</strong>
+          </ion-col>
+          <ion-col>
+            <strong>Necessary</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row-pad">
+          <ion-col >
+            <strong>Bought a new one</strong>
+          </ion-col>
+          <ion-col>
+            <strong>Optional</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row-pad">
+          <ion-col>
+            <strong>2" hand gift</strong>
+          </ion-col>
+          <ion-col>
+            <strong>Not necessary</strong>
+          </ion-col>
+        </ion-row >
+        <ion-row class="row-pad">
+          <ion-col>
+            <strong>Bought a used one</strong>
+          </ion-col>
+          <ion-col>
+            <strong>Not necessary at all</strong>
+          </ion-col>
+        </ion-row> -->
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title  text-center>
+      <button class="nav-button" size="small" (click)="navigateToSubCategory(pageId - 1, pageId)" [disabled]="pageId == 0">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </button>
+      <div class="nav-text"><span class="text-color">{{pageId}} / {{subcategoryCount}}</span></div>
+      <button class="nav-button" size="small" (click)="navigateToSubCategory(pageId + 1, pageId)" [disabled]="pageId == subcategoryCount">
+        <ion-icon slot="start" name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
