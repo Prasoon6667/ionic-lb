@@ -14,7 +14,7 @@ export class SubCategoryService {
     return this.httpService.postHttp('products', {});
   }
 
-  submitSuggestion (id, isSelected, subcategoryId) {
-    return this.httpService.postHttp('suggestions', {id: id, isSelected: isSelected, subcategoryId: subcategoryId});
+  submitSuggestion (id, isSelected, subcategoryId, selectionSide) {
+    return this.httpService.postHttp('suggestions', {id: id, isSelected: isSelected, subcategoryId: subcategoryId, selectionSide: selectionSide});
   }
 }

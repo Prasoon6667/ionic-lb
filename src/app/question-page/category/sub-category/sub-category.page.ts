@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubCategoryService } from './sub-category.service';
 
+const LEFT_SUGGESTION = 'LEFT';
+const RIGHT_SUGGESTION = 'RIGHT';
+
 @Component({
   selector: 'app-sub-category',
   templateUrl: './sub-category.page.html',
@@ -15,66 +18,66 @@ export class SubCategoryPage implements OnInit {
 
   //this is a sample suggestion. Like this each sub category should have the suggestions. this needs to be removed
   sampleSuggestion = [
-      {
-        id: 1,
-        displayName: 'i didn\'t have',
-        isSelected: false,
-        
-      },
-      {
-        id: 2,
-        displayName: 'Very necessary',
-        isSelected: false,
-        
-      },
-      {
-        id: 3,
-        displayName: 'Necessary',
-        isSelected: false,
-        
-      },
-      {
-        id: 4,
-        displayName: 'Bought a new one',
-        isSelected: false,
-        
-      },
-      {
-        id: 5,
-        displayName: 'New gift',
-        isSelected: false,
-        
-      },
-      {
-        id: 6,
-        displayName: 'Optional',
-        isSelected: false,
-        
-      },
-      {
-        id: 7,
-        displayName: '2" hand gift',
-        isSelected: false,
-        
-      },
-      {
-        id: 8,
-        displayName: 'Not necessary',
-        isSelected: false,
-        
-      },
-      {
-        id: 9,
-        displayName: 'Bought a used one',
-        isSelected: false,
-        
-      },
-      {
-        id: 10,
-        displayName: 'Not necessary at all',
-        isSelected: false,
-        
-      }
+    {
+      id: 1,
+      displayName: 'i didn\'t have',
+      isSelected: false,
+
+    },
+    {
+      id: 2,
+      displayName: 'Very necessary',
+      isSelected: false,
+
+    },
+    {
+      id: 3,
+      displayName: 'New gift',
+      isSelected: false,
+
+    },
+    {
+      id: 4,
+      displayName: 'Necessary',
+      isSelected: false,
+
+    },
+    {
+      id: 5,
+      displayName: 'Bought a new one',
+      isSelected: false,
+
+    },
+    {
+      id: 6,
+      displayName: 'Optional',
+      isSelected: false,
+
+    },
+    {
+      id: 7,
+      displayName: '2" hand gift',
+      isSelected: false,
+
+    },
+    {
+      id: 8,
+      displayName: 'Not necessary',
+      isSelected: false,
+
+    },
+    {
+      id: 9,
+      displayName: 'Bought a used one',
+      isSelected: false,
+
+    },
+    {
+      id: 10,
+      displayName: 'Not necessary at all',
+      isSelected: false,
+
+    }
   ];
   // categoryDetail = {
   //   img: '../assets/categoryInfo.png',
@@ -178,9 +181,9 @@ export class SubCategoryPage implements OnInit {
 
   ngOnInit() {
     this.subCategory.getAllSubcategory().subscribe(
-      (res:any) => {
+      (res: any) => {
         console.log(res);
-        this.categoryDetail = res.result;       
+        this.categoryDetail = res.result;
         this.pageId = 0;
         // this.pageId = +this.activatedRoute.snapshot.params['subId'];
         this.categoryName = this.categoryDetail.categoryName;
@@ -193,7 +196,7 @@ export class SubCategoryPage implements OnInit {
 
   navigateToSubCategory(id: number, prevPageId: number) {
     this.pageId = id;
-    
+
     if (prevPageId != 0) {
       this.categoryDetail.subCategories[prevPageId - 1].suggestions = this.pageData.suggestions;
     }
@@ -206,7 +209,7 @@ export class SubCategoryPage implements OnInit {
     }
   }
 
-  showCategoryDetail () {
+  showCategoryDetail() {
     this.pageData = {
       img: this.categoryDetail.img,
       description: this.categoryDetail.description,
@@ -214,10 +217,12 @@ export class SubCategoryPage implements OnInit {
   }
 
   submitSuggestion(suggestionindex) {
-     this.subCategory.submitSuggestion(this.sampleSuggestion[suggestionindex].id, !this.sampleSuggestion[suggestionindex].isSelected, this.pageData.id).subscribe (
-       (res: any) => {
+    this.subCategory.submitSuggestion(this.sampleSuggestion[suggestionindex].id, !this.sampleSuggestion[suggestionindex].isSelected, this.pageData.id, this.getSelectionSide(suggestionindex)).subscribe(
+      (res: any) => {
+      debugger;
+        this.handleSuggestionArrayEachClick(suggestionindex);
         this.sampleSuggestion[suggestionindex].isSelected = !this.sampleSuggestion[suggestionindex].isSelected;
-        let index = this.pageData.suggestions.indexOf(this.sampleSuggestion[suggestionindex].id); 
+        let index = this.pageData.suggestions.indexOf(this.sampleSuggestion[suggestionindex].id);
         if (index === -1) {
           this.pageData.suggestions.push(this.sampleSuggestion[suggestionindex].id);
         } else {
@@ -227,13 +232,35 @@ export class SubCategoryPage implements OnInit {
     );
   }
 
-  handleSuggestionArray (suggestionArray) {
+  handleSuggestionArray(suggestionArray) {
     this.sampleSuggestion.forEach(suggestion => {
-      if(suggestionArray.indexOf(suggestion.id) === -1 ) {
+      if (suggestionArray.indexOf(suggestion.id) === -1) {
         suggestion.isSelected = false;
       } else {
         suggestion.isSelected = true;
       }
+    });
+  }
+
+  private getSelectionSide (suggestionindex) {
+    if (suggestionindex % 2 === 0) {
+      return LEFT_SUGGESTION;
+    } else {
+      return RIGHT_SUGGESTION;
+    }
+  }
+
+  private handleSuggestionArrayEachClick (suggestionindex) {
+    let counter = 0; 
+    this.sampleSuggestion.forEach(eachSuggestion => {
+      if (counter % 2 === suggestionindex % 2 && counter != suggestionindex) {
+        let index = this.pageData.suggestions.indexOf(eachSuggestion.id);
+        if (index >= 0) {
+          this.pageData.suggestions.splice(index, 1);
+          eachSuggestion.isSelected = false;
+        }
+      }
+      counter++;
     });
   }
 

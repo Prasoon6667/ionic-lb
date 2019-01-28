@@ -8,7 +8,7 @@ export class HttpService {
   constructor(
     private http: HttpClient,
   ) {
-    this.baseUrl = 'http://52.90.252.142:8069/';
+    this.baseUrl = 'http://localhost:8069/';
   }
 
   createAuthorizationHeader(): HttpHeaders {
